@@ -1,0 +1,6 @@
+@Equillibrium.API_HostAddress = http://localhost:5152
+
+GET {{Equillibrium.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Equillibrium.API/Equillibrium.API.csproj" />
+  <Project Path="Equillibrium.Application/Equillibrium.Application.csproj" />
+  <Project Path="Equillibrium.Core/Equillibrium.Core.csproj" />
+  <Project Path="Equillibrium.Infrastructure/Equillibrium.Infrastructure.csproj" />
+</Solution>
