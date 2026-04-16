@@ -4,6 +4,7 @@ namespace Equillibrium.Core.Entities;
 
 public class SupplierMaterial
 {
+     public Guid Id { get; set; }
     public Guid SupplierId { get; set; }
     public Contact? Supplier { get; set; } // Now it sees 'Contact' in the same namespace
 

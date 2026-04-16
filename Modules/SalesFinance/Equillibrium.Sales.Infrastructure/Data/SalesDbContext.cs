@@ -30,6 +30,8 @@ public class SalesDbContext : DbContext
             .WithOne()
             .HasForeignKey(ei => ei.EstimateId);
 
+        modelBuilder.Entity<SupplierMaterial>()
+            .HasKey(sm => sm.Id); 
         base.OnModelCreating(modelBuilder);
        
     }

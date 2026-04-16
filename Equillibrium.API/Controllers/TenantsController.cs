@@ -66,8 +66,10 @@ public class TenantsController : ControllerBase
             .OrderByDescending(u => u.CreatedAt)
             .ToListAsync();
 
-        return Ok(notifications);
+        // Ensure this return is outside the logic but inside the method
+        return Ok(notifications); 
     }
+
 
     /*[HttpPost("import-supplier/{globalContactId}")]
     public async Task<IActionResult> ImportSupplier(Guid globalContactId)
