@@ -23,8 +23,8 @@ public class ApplicationDbContext : DbContext
     // --- TENANT-SPECIFIC DB SETS ---
     public DbSet<Material> Materials => Set<Material>();
     public DbSet<MaterialLot> MaterialLots => Set<MaterialLot>();
-    public DbSet<Invoice> Invoices => Set<Invoice>();
-    public DbSet<InvoiceItem> InvoiceItems => Set<InvoiceItem>();
+    //public DbSet<Invoice> Invoices => Set<Invoice>();
+   // public DbSet<InvoiceItem> InvoiceItems => Set<InvoiceItem>();
     public DbSet<SupplierMaterial> SupplierMaterials => Set<SupplierMaterial>();
     public DbSet<PurchaseOrder> PurchaseOrders => Set<PurchaseOrder>();
     public DbSet<PurchaseOrderItem> PurchaseOrderItems => Set<PurchaseOrderItem>();
@@ -154,8 +154,8 @@ public class ApplicationDbContext : DbContext
                 .HasForeignKey(sm => sm.MaterialId);
         });
 
-        modelBuilder.Entity<Invoice>().ToTable("Invoices");
-        modelBuilder.Entity<InvoiceItem>().ToTable("InvoiceItems");
+       // modelBuilder.Entity<Invoice>().ToTable("Invoices");
+       // modelBuilder.Entity<InvoiceItem>().ToTable("InvoiceItems");
 
         modelBuilder.Entity<Contact>().HasQueryFilter(c => !c.IsDeleted);
     }

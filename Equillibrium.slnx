@@ -1,7 +1,18 @@
 <Solution>
+  <Folder Name="/Modules/" />
+  <Folder Name="/Modules/Manufacturing/">
+    <Project Path="Modules/Manufacturing/Equillibrium.Manufacturing.csproj" />
+  </Folder>
+  <Folder Name="/Modules/QualityControl/">
+    <Project Path="Modules/QualityControl/Equillibrium.QC.Core/Equillibrium.QC.Core.csproj" />
+    <Project Path="Modules/QualityControl/Equillibrium.QC.Infrastructure/Equillibrium.QC.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Modules/SalesFinance/">
+    <Project Path="Modules/SalesFinance/Equillibrium.Sales.Core/Equillibrium.Sales.Core.csproj" />
+    <Project Path="Modules/SalesFinance/Equillibrium.Sales.Infrastructure/Equillibrium.Sales.Infrastructure.csproj" />
+  </Folder>
   <Project Path="Equillibrium.API/Equillibrium.API.csproj" />
   <Project Path="Equillibrium.Application/Equillibrium.Application.csproj" />
   <Project Path="Equillibrium.Core/Equillibrium.Core.csproj" />
   <Project Path="Equillibrium.Infrastructure/Equillibrium.Infrastructure.csproj" />
-  <Project Path="Equillibrium.Manufacturing/Equillibrium.Manufacturing.csproj" />
 </Solution>

@@ -1,3 +1,4 @@
+using Equillibrium.Core.Entities;
 namespace Equillibrium.Core.Entities;
 
 public class PurchaseOrderItem

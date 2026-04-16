@@ -1,8 +1,8 @@
 using System.Data.Common;
-using Equillibrium.Core.Interfaces;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Equillibrium.Core.Interfaces;
 
-namespace Equillibrium.Infrastructure.Data.Interceptors;
+namespace Equillibrium.Infrastructure.Data.Persistence;
 
 public class TenantSchemaInterceptor : DbConnectionInterceptor
 {
@@ -13,39 +13,33 @@ public class TenantSchemaInterceptor : DbConnectionInterceptor
         _tenantService = tenantService;
     }
 
-    // This runs AFTER the connection is physically open and ready for commands
-    public override void ConnectionOpened(
+    public override InterceptionResult ConnectionOpening(
         DbConnection connection, 
-        ConnectionEndEventData eventData)
+        ConnectionEventData eventData, 
+        InterceptionResult result)
     {
-        var tenantId = _tenantService.GetTenantId();
+        var tenantSchema = _tenantService.GetTenantSchema(); // e.g., "tenant_a"
         
-        if (!string.IsNullOrEmpty(tenantId))
-        {
-            using var command = connection.CreateCommand();
-            // Quotes handle the hyphens in the UUID schema name
-            command.CommandText = $"SET search_path TO \"{tenantId}\", public;";
-            command.ExecuteNonQuery();
-        }
+        using var command = connection.CreateCommand();
+        // This is the magic line for Postgres Multi-Schema
+        command.CommandText = $"SET search_path TO {tenantSchema}, public;";
+        command.ExecuteNonQuery();
 
-        base.ConnectionOpened(connection, eventData);
+        return result;
     }
 
-    // Async version for async queries
-    public override async Task ConnectionOpenedAsync(
+    public override async ValueTask<InterceptionResult> ConnectionOpeningAsync(
         DbConnection connection, 
-        ConnectionEndEventData eventData, 
+        ConnectionEventData eventData, 
+        InterceptionResult result, 
         CancellationToken cancellationToken = default)
     {
-        var tenantId = _tenantService.GetTenantId();
+        var tenantSchema = _tenantService.GetTenantSchema();
         
-        if (!string.IsNullOrEmpty(tenantId))
-        {
-            await using var command = connection.CreateCommand();
-            command.CommandText = $"SET search_path TO \"{tenantId}\", public;";
-            await command.ExecuteNonQueryAsync(cancellationToken);
-        }
+        await using var command = connection.CreateCommand();
+        command.CommandText = $"SET search_path TO {tenantSchema}, public;";
+        await command.ExecuteNonQueryAsync(cancellationToken);
 
-        await base.ConnectionOpenedAsync(connection, eventData, cancellationToken);
+        return result;
     }
 }

@@ -3,11 +3,14 @@
   <ItemGroup>
     <ProjectReference Include="..\Equillibrium.Application\Equillibrium.Application.csproj" />
     <ProjectReference Include="..\Equillibrium.Core\Equillibrium.Core.csproj" />
+    <ProjectReference Include="..\Modules\Manufacturing\Equillibrium.Manufacturing.csproj" />
+    <ProjectReference Include="..\Modules\SalesFinance\Equillibrium.Sales.Infrastructure\Equillibrium.Sales.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\QualityControl\Equillibrium.QC.Infrastructure\Equillibrium.QC.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.6">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

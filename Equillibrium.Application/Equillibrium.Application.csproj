@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Equillibrium.Core\Equillibrium.Core.csproj" />
+    <ProjectReference Include="..\Modules\SalesFinance\Equillibrium.Sales.Core\Equillibrium.Sales.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

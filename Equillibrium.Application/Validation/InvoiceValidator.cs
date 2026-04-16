@@ -1,5 +1,5 @@
 using FluentValidation;
-using Equillibrium.Core.Entities;
+using Equillibrium.Sales.Core.Entities;
 
 namespace Equillibrium.Application.Validation;
 

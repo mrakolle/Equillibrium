@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
-
-namespace Equillibrium.Core.Entities;
+namespace Equillibrium.Sales.Core.Entities;
 
 public class InvoiceItem
 {

@@ -11,8 +11,8 @@
   <ItemGroup>
     <!-- <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0-preview.2.25159.112" /> -->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0-preview.2.25164.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.6">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Equillibrium.Infrastructure\Equillibrium.Infrastructure.csproj" />
     <ProjectReference Include="..\Equillibrium.Application\Equillibrium.Application.csproj" />
+    <ProjectReference Include="..\Modules\Manufacturing\Equillibrium.Manufacturing.csproj" />
   </ItemGroup>
 
 </Project>

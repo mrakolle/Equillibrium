@@ -30,4 +30,14 @@ public class TenantService : ITenantService
 
         return string.IsNullOrEmpty(tenantId) ? null : tenantId;
     }
+    public string GetTenantSchema()
+    {
+        // Example: Get from X-Tenant-Id header and format as "tenant_uuid"
+        var tenantId = _httpContextAccessor.HttpContext?.Request.Headers["X-Tenant-Id"].ToString();
+        
+        if (string.IsNullOrEmpty(tenantId))
+            return "public"; // Fallback to public if no tenant provided
+
+        return $"tenant_{tenantId.Replace("-", "_")}";
+    }
 }

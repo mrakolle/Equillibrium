@@ -26,50 +26,49 @@ public class ContactsController : ControllerBase
         return contact == null ? NotFound() : contact;
     }
 
+
     // POST: api/contacts
     [HttpPost]
-    // POST: api/contacts
-[HttpPost]
-public async Task<ActionResult<Contact>> CreateContact(Contact contact) 
-{
-    // EF now knows exactly what table and columns to use
-    _context.Contacts.Add(contact);
-    await _context.SaveChangesAsync();
+    public async Task<ActionResult<Contact>> CreateContact(Contact contact) 
+    {
+        // EF now knows exactly what table and columns to use
+        _context.Contacts.Add(contact);
+        await _context.SaveChangesAsync();
 
-    // This returns a 201 Created status and a link to the new record
-    return CreatedAtAction(nameof(GetContact), new { id = contact.Id }, contact);
-}
+        // This returns a 201 Created status and a link to the new record
+        return CreatedAtAction(nameof(GetContact), new { id = contact.Id }, contact);
+    }
 
 
     // DELETE: api/contacts/{id}
     [HttpDelete("{id}")]
-public async Task<IActionResult> DeleteContact(Guid id)
-{
-    var contact = await _context.Contacts.FindAsync(id);
-    if (contact == null) return NotFound();
+    public async Task<IActionResult> DeleteContact(Guid id)
+    {
+        var contact = await _context.Contacts.FindAsync(id);
+        if (contact == null) return NotFound();
 
-    // SOFT DELETE: Just flip the flag
-    contact.IsDeleted = true;
-    
-    await _context.SaveChangesAsync();
-    return NoContent();
-}
-// DELETE: api/contacts/{id}/permanent
-[HttpDelete("{id}/permanent")]
-public async Task<IActionResult> ForceDeleteContact(Guid id)
-{
-    // Use .IgnoreQueryFilters() so we can find the record even if it was already soft-deleted
-    var contact = await _context.Contacts
-        .IgnoreQueryFilters()
-        .FirstOrDefaultAsync(c => c.Id == id);
+        // SOFT DELETE: Just flip the flag
+        contact.IsDeleted = true;
+        
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+    // DELETE: api/contacts/{id}/permanent
+    [HttpDelete("{id}/permanent")]
+    public async Task<IActionResult> ForceDeleteContact(Guid id)
+    {
+        // Use .IgnoreQueryFilters() so we can find the record even if it was already soft-deleted
+        var contact = await _context.Contacts
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(c => c.Id == id);
 
-    if (contact == null) return NotFound();
+        if (contact == null) return NotFound();
 
-    // HARD DELETE: Actually removes the row from Postgres
-    _context.Contacts.Remove(contact);
-    
-    await _context.SaveChangesAsync();
-    return NoContent();
-}
+        // HARD DELETE: Actually removes the row from Postgres
+        _context.Contacts.Remove(contact);
+        
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
 
 }
