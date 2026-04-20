@@ -1,19 +1,29 @@
 using Equillibrium.Core.Interfaces;
 using Equillibrium.Infrastructure.Data;
-using Equillibrium.Infrastructure.Data.Persistence; // Ensure this matches your Interceptor path
+using Equillibrium.Infrastructure.Data.Persistence;
 using Equillibrium.Infrastructure.Services;
+using Equillibrium.API.Middleware;
+using Equillibrium.Manufacturing.Controllers;
+//using Equillibrium.Manufacturing.Controllers;
+using Equillibrium.Sales.Controllers;
+using Equillibrium.QC.Controllers;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Equillibrium.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- 1. CORE SERVICES ---
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-
-// --- 2. DATABASE CONFIG (Move this UP) ---
+// --- 1. DATABASE CONFIG ---
 var connectionString = builder.Configuration.GetConnectionString("MasterDb");
+
+// --- 2. CORE SERVICES & CONTROLLER DISCOVERY ---
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(ManufacturingController).Assembly)
+    .AddApplicationPart(typeof(SalesController).Assembly)
+    .AddApplicationPart(typeof(QCController).Assembly);
+
+
+builder.Services.AddEndpointsApiExplorer();
 
 // --- 3. SWAGGER CONFIG ---
 builder.Services.AddSwaggerGen(options =>
@@ -36,18 +46,16 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// --- 4. INFRASTRUCTURE & MODULES ---
+// --- 4. INFRASTRUCTURE & MODULAR APPS ---
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ITenantService, TenantService>();
 builder.Services.AddScoped<ITenantProvisioningService, TenantProvisioningService>();
-
-// Register the Interceptor
 builder.Services.AddScoped<TenantSchemaInterceptor>();
 
-// IMPORTANT: Register all modular "Apps" (Sales, Manufacturing, QC)
+// This wires up Sales, Mfg, and QC contexts
 builder.Services.AddEcosystemModules(connectionString!);
 
-// Register the main "OS" Context
+// Main OS Context
 builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
 {
     var interceptor = sp.GetRequiredService<TenantSchemaInterceptor>();
@@ -66,7 +74,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Add the Middleware we discussed earlier to resolve tenant context
+// The "Traffic Cop" that sets the Tenant ID for the Interceptor
 app.UseMiddleware<TenantMiddleware>(); 
 
 app.UseAuthorization();

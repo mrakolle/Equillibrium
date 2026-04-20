@@ -12,7 +12,7 @@ public class QCDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("tenants");
+        //modelBuilder.HasDefaultSchema("tenants");
         base.OnModelCreating(modelBuilder);
     }
 }

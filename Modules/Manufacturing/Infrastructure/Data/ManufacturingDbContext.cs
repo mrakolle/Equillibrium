@@ -28,7 +28,7 @@ public class ManufacturingDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("tenants");
+       // modelBuilder.HasDefaultSchema("tenants");
 
         // Many-to-Many: Recipe <-> Ingredient via BOMItem
         modelBuilder.Entity<BOMItem>()

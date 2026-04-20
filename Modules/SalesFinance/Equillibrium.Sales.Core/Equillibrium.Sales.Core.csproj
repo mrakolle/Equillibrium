@@ -1,13 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Equillibrium.Core\Equillibrium.Core.csproj" />
-  </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>Equillibrium.Sales</RootNamespace>
+    <AssemblyName>Equillibrium.Sales</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../Equillibrium.Core/Equillibrium.Core.csproj" />
+   <!-- <ProjectReference Include="../Equillibrium.Sales.Infrastructure/Equillibrium.Sales.Infrastructure.csproj" />-->
+  </ItemGroup>
+
 </Project>
+

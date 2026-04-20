@@ -1,6 +1,68 @@
 using Microsoft.AspNetCore.Mvc;
 using Equillibrium.Core.Interfaces;
 using Equillibrium.Infrastructure.Data;
+using Equillibrium.Application.DTOs;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+
+namespace Equillibrium.API.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+[Authorize] // Enforce Authorization at the top
+public class TenantsController : ControllerBase
+{
+    private readonly ITenantProvisioningService _provisioningService;
+    private readonly ApplicationDbContext _context;
+
+    public TenantsController(ITenantProvisioningService provisioningService, ApplicationDbContext context)
+    {
+        _provisioningService = provisioningService;
+        _context = context;
+    }
+
+
+    [AllowAnonymous] // Allow new clients to hit this without a token initially
+   [HttpPost("onboard")]
+    public async Task<IActionResult> OnboardTenant([FromBody] OnboardRequestDto request)
+    {
+        // 1. Create the Metadata first
+        var newTenant = new Equillibrium.Core.Entities.Tenant 
+        { 
+            Id = Guid.NewGuid(), 
+            Name = request.TenantName,
+            Address = request.Address,
+            Telephone = request.Telephone,
+            Mobile = request.Mobile,
+            Email = request.Email,
+            LogoUrl = request.LogoUrl
+            // ... (rest of your mapping)
+        };
+
+        // 2. STEP ONE: Save ONLY to the public schema
+        // We do this first so the Interceptor and Service can "recognize" this ID later
+        _context.Tenants.Add(newTenant);
+        await _context.SaveChangesAsync(); 
+
+        try 
+        {
+            // 3. STEP TWO: Now that the record exists, run the heavy lifting
+            await _provisioningService.ProvisionTenantAsync(newTenant.Id.ToString());
+
+            return Ok(new { Message = "Successfully onboarded", TenantId = newTenant.Id });
+        }
+        catch (Exception ex)
+        {
+            // If the second step fails, we have a "Half-Onboarded" tenant.
+            // We'll return the error so we know it's a DB issue, not a registration issue.
+            return BadRequest($"Metadata saved, but Provisioning failed: {ex.Message}");
+        }
+    }
+}
+
+/*using Microsoft.AspNetCore.Mvc;
+using Equillibrium.Core.Interfaces;
+using Equillibrium.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Equillibrium.Application.DTOs;
 
@@ -94,5 +156,6 @@ public class TenantsController : ControllerBase
         {
             return BadRequest($"Import failed: {ex.Message}");
         }
-    }*/
-}
+    }
+}*/
+

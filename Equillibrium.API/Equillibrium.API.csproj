@@ -23,6 +23,10 @@
     <ProjectReference Include="..\Equillibrium.Infrastructure\Equillibrium.Infrastructure.csproj" />
     <ProjectReference Include="..\Equillibrium.Application\Equillibrium.Application.csproj" />
     <ProjectReference Include="..\Modules\Manufacturing\Equillibrium.Manufacturing.csproj" />
+    <ProjectReference Include="..\Modules\SalesFinance\Equillibrium.Sales.Core\Equillibrium.Sales.Core.csproj" />
+    <ProjectReference Include="..\Modules\QualityControl\Equillibrium.QC.Core\Equillibrium.QC.Core.csproj" />
+    <ProjectReference Include="..\Modules\SalesFinance\Equillibrium.Sales.Infrastructure\Equillibrium.Sales.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\QualityControl\Equillibrium.QC.Infrastructure\Equillibrium.QC.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

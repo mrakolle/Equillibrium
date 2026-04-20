@@ -17,7 +17,7 @@ public class SalesDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Multi-Schema Enforcement
-        modelBuilder.HasDefaultSchema("tenants");
+        //modelBuilder.HasDefaultSchema("tenants");
 
         // Example: Configure the Invoice -> Items relationship
         modelBuilder.Entity<Invoice>()

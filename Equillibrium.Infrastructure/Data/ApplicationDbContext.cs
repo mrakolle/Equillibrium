@@ -154,7 +154,7 @@ public class ApplicationDbContext : DbContext
                 .HasForeignKey(sm => sm.MaterialId);
         });
 
-       // modelBuilder.Entity<Invoice>().ToTable("Invoices");
+       //modelBuilder.Entity<Invoice>().ToTable("Invoices");
        // modelBuilder.Entity<InvoiceItem>().ToTable("InvoiceItems");
 
         modelBuilder.Entity<Contact>().HasQueryFilter(c => !c.IsDeleted);
